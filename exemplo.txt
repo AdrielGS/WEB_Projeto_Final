@@ -1,0 +1,29 @@
+Question(){
+	
+	$id;
+	$value;
+	$type;
+	$difficulty;
+	$subject;
+	$tags;
+	Answer $a[];
+	// Existe quando for aberta de mais de uma opção
+	Questions $q[];
+
+}
+
+Answer(){
+	
+	$value;
+	$id;
+	$question_id;
+	$correct;
+}
+
+Questions(){
+	$value;
+	$id;
+	$question_id;
+	$answer;
+	
+}
