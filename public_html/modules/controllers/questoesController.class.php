@@ -20,7 +20,7 @@ class questoes extends Controller
 		$question = $_POST["question"];
 		// Não dá erro, mas  $numero_opcoes nao aparece;
 		$numero_opcoes = "<script type = 'text/script' src='js/js.js'>document.write(i)</script>";
-		echo ">>> $numero_opcoes $subject";
+		echo "Teste >>>" . " $numero_opcoes" ."$subject";
 
 /*
 		if ($type == 1) {
