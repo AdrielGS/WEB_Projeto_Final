@@ -1,0 +1,22 @@
+RewriteEngine On
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)/?$ index.php?url=$1 [NC,L]
+
+ErrorDocument 403 error/error403
+ErrorDocument 404 error/error404
+
+<Files "*.php">
+	Order Allow,Deny
+	Deny from all
+</Files>
+
+<Files "index.php">
+	Order Allow,Deny
+	Allow from all
+</Files>
+
+<Files "ajax.php">
+	Order Allow,Deny
+	Allow from all
+</Files>

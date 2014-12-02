@@ -45,7 +45,8 @@
 
       function addTag(value){
         if (value == 'add') {
-          var txt = "<td colspan='3'><input type = 'text' id = 'newTag' > </td>";
+          check = 1;
+          var txt = "<td colspan='3'><input type = 'text' id = 'newTag' onchange='addTag(this.value)'> </td>";
           document.getElementById("select_subject").insertAdjacentHTML('afterEnd', txt);
         }
         // MARRETA ! 
@@ -53,6 +54,8 @@
           if(document.getElementById("newTag")){
             document.getElementById("newTag").outerHTML = "";
           }
+
+          document.getElementById("subject").innerHTML = value;
          
         }
 
@@ -71,6 +74,7 @@
        <tr> 
         <td id="select_subject">
          <select id = "subject_opt" onchange="addTag(this.value)">
+          <option> Selecione a matéria: </option>
           <option> Materia 01 </option>
           <option> Materia 02 </option>
           <option value="add" > Adicionar </option>
