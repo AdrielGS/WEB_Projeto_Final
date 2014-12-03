@@ -2,6 +2,7 @@
 <head>
   <title> Teste 01 </title>
   <meta charset = 'UTF-8' />
+  <base href="<?php echo URL; ?>">
   <script type="text/javascript" src="js/js.js">
   </script>
 </head> 
@@ -16,8 +17,8 @@
        <select id = "subject_opt" name="subject_opt" onchange="changeTitle(this.value), addTag(this.value)">
         <option> Materia 01 </option>
         <option> Materia 02 </option>
-        <!-- Quando add uma materia  , o value desse select deverá passar a ser a nova materia" -->
         <option value="add" > Adicionar </option>
+        <!-- se for adicionar nova materia, aparece um prompt ou input ao lado -->
       </select>
 
     </td>       

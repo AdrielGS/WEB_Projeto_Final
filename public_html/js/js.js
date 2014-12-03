@@ -1,3 +1,5 @@
+
+
 var i = 0;
 var y = 0;
 var type_id = 0;
@@ -30,8 +32,8 @@ function createOptions(){
         a = "<tr><td>Introdução: </td><td colspan='3'><input type='text' id='introduction' name='introduction'></td></tr>";
       }
       else{*/
-      a = "<tr id='option"+i+"'><td></td><td colspan='2'>P: <input type='text' id ='opt"+i+"' ></td>" + 
-        "<td colspan='2' id='option'>R: <input type = 'text' name = 'answer_op' id ='answer_op"+i+"'> </td></tr> ";
+      a = "<tr id='option"+i+"' ><td></td><td colspan='2' >P: <input type='text' id ='opt"+i+"' name='opt"+i+"' value='"+i+"'></td>" + 
+        "<td colspan='2' id='option'>R: <input type = 'text' name = 'answer_op' id ='answer_op"+i+"' name='answer_op"+i+"'> </td></tr> ";
      // }
       break;
 
@@ -43,8 +45,8 @@ function createOptions(){
         i = 0;
       }
       i++;
-      a = "<tr id='option"+i+"'><td></td><td colspan='4'><input type = 'text' id ='opt"+i+"'>" + 
-      "<input type = 'radio' name = 'answer_mc' id ='answer_mc"+i+"'> </td></tr> " ;
+      a = "<tr id='option"+i+"'><td></td><td colspan='4'><input type = 'text' id ='opt"+i+"' name='opt"+i+"' value='"+i+"'>" + 
+      "<input type = 'radio' name = 'answer_mc' id='answer_mc"+i+"' name='answer_mc"+i+"'> </td></tr> " ;
       break;
 
      case "3":
@@ -55,8 +57,8 @@ function createOptions(){
         i = 0;
       }
       i++;
-      a = "<tr id='option"+i+"'><td></td><td colspan='4'><input type = 'text' id ='opt"+i+"'>" + 
-      "<input type = 'checkbox' name = 'answer_tf' id ='answer_tf"+i+"'> </td></tr> " ;
+      a = "<tr id='option"+i+"'><td></td><td colspan='4'><input type = 'text' id ='opt"+i+"' name='opt"+i+"' value='"+i+"'>" + 
+      "<input type = 'checkbox' name = 'answer_tf' id ='answer_tf"+i+"' name='answer_tf"+i+"'> </td></tr> " ;
       break;
    }
 
@@ -64,6 +66,7 @@ function createOptions(){
  }
 
 function addTag(value){
+  
   if (value == 'add') {
     document.getElementById('subject').innerHTML = 'Adicionar materia.';
     var txt = "<td colspan='3'><input type = 'text' id = 'newTag' onchange='changeTitle(this.value)'> </td>";
@@ -75,8 +78,11 @@ function addTag(value){
       document.getElementById("newTag").outerHTML = "";
     }
   }
+
 }
 
 function changeTitle(title){
+  
   document.getElementById('subject').innerHTML = title;
+
 }

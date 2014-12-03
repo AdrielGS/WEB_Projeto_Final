@@ -13,14 +13,25 @@ class questoes extends Controller
 	}
 
 	public function add(){
+		echo "<base href='<?php echo URL; ?>'";
 		$subject = $_POST["subject_opt"];
 		$type = $_POST["type"];
 		$tags = $_POST["tags"];
 		$difficulty = $_POST['difficulty'];
 		$question = $_POST["question"];
-		// Não dá erro, mas  $numero_opcoes nao aparece;
-		$numero_opcoes = "<script type = 'text/script' src='js/js.js'>document.write(i)</script>";
-		echo "Teste >>>" . " $numero_opcoes" ."$subject";
+		$numero_opcoes = "<script src='js/js.js'></script><script>document.write(i)</script>";
+		$i = 1;
+		
+		/*$opcao = $_POST["opt1"];
+		$opcao2 = $_POST["opt2"];
+		echo ">>>" . $numero_opcoes . $subject . "<br/>" . $opcao . "  " . $opcao2;*/
+
+		while ( !empty($_POST["opt" . $i]) ) {
+			$opcoes[ ($i - 1) ] = $_POST["opt" . $i];
+			$i++;	
+		}
+
+		var_dump($opcoes);
 
 /*
 		if ($type == 1) {
