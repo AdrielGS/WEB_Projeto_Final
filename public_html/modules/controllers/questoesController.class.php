@@ -21,17 +21,41 @@ class questoes extends Controller
 		$question = $_POST["question"];
 		$numero_opcoes = "<script src='js/js.js'></script><script>document.write(i)</script>";
 		$i = 1;
+		$resp = array();
+		$j = 0;
 		
 		/*$opcao = $_POST["opt1"];
 		$opcao2 = $_POST["opt2"];
 		echo ">>>" . $numero_opcoes . $subject . "<br/>" . $opcao . "  " . $opcao2;*/
-
-		while ( !empty($_POST["opt" . $i]) ) {
-			$opcoes[ ($i - 1) ] = $_POST["opt" . $i];
-			$i++;	
+		switch ($type) {
+			case '1':
+				while ( !empty($_POST["opt" . $i]) ) {
+					$opcoes[ ($i - 1) ] = $_POST["opt" . $i];
+					$resp[($i - 1)] = $_POST["answer_op".$i];
+					$i++;	
+				}	
+				break;
+			case '2':
+				while ( !empty($_POST["mc" . $i])) {
+					$opcoes[($i - 1)] = $_POST["mc" . $i];
+					$i++;
+				}
+				$resp[0] = $_POST["answer_mc"];
+				break;
+			
+			case '3':
+				while ( !empty(_POST["tf".$i])) {
+					$opcoes[($i - 1)] = $_POST["tf" . $i];
+					if(isset($_POST["answer_tf" . $i])) {
+						$resp[$j] = $_POST["answer_tf" . $i];
+						$j++;
+					}
+					$i++;
+				}
+				break;
 		}
-
-		var_dump($opcoes);
+		
+		# var_dump($opcoes);
 
 /*
 		if ($type == 1) {
