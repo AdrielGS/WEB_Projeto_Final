@@ -7,6 +7,10 @@ var a = "";
 
 primeiraOpcao = true;
 
+function pegaValor (value) {
+  $valor = value;
+}
+
 function setType(x){
   if (type_id == x || type_id == 0)
     primeiraOpcao = false;
@@ -33,7 +37,7 @@ function createOptions(){
       }
       else{*/
       a = "<tr id='option"+i+"' ><td></td><td colspan='2' >P: <input type='text' id ='opt"+i+"' name='opt"+i+"'></td>" + 
-        "<td colspan='2' id='option'>R: <input type = 'text' id ='answer_op"+i+"' name='answer_op"+i+"'> </td></tr> ";
+        "<td colspan='2' id='option'>R: <input type = 'text' id ='answer_op"+i+"' name='answer_op"+i+" onchange = 'pegaValor(this.value)'> </td></tr> ";
      // }
       break;
 
@@ -46,7 +50,7 @@ function createOptions(){
       }
       i++;
       a = "<tr id='option"+i+"'><td></td><td colspan='4'><input type = 'text' id ='mc"+i+"' name='mc"+i+"'>" + 
-      "<input type = 'radio' name = 'answer_mc' id='answer_mc"+i+"' value = 'answer_mc"+i+"'> </td></tr> " ;
+      "<input type = 'radio' name = 'answer_mc' id='answer_mc"+i+"' value = $valor> </td></tr> " ;
       break;
 
      case "3":
@@ -58,7 +62,7 @@ function createOptions(){
       }
       i++;
       a = "<tr id='option"+i+"'><td></td><td colspan='4'><input type = 'text' id ='tf"+i+"' name='tf"+i+"' value='"+i+"'>" + 
-      "<input type = 'checkbox' id ='answer_tf"+i+"' name='answer_tf"+i+"'value = 'answer_tf"+i+"'> </td></tr> " ;
+      "<input type = 'checkbox' id ='answer_tf"+i+"' name='answer_tf"+i+"'value = $valor> </td></tr> " ;
       break;
    }
 
