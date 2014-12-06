@@ -32,8 +32,14 @@ function createOptions(){
         a = "<tr><td>Introdução: </td><td colspan='3'><input type='text' id='introduction' name='introduction'></td></tr>";
       }
       else{*/
-      a = "<tr id='option"+i+"' ><td></td><td colspan='2' >P: <input type='text' id ='opt"+i+"' name='opt"+i+"'></td>" + 
-        "<td colspan='2' id='option'>R: <input type = 'text' id ='answer_op"+i+"' name='answer_op"+i+"'> </td></tr> ";
+      a = "<tr id='option"+i+"' >" + 
+      "<td></td>" + 
+      "<td colspan='2' >" + 
+        "P: <input type='text' id ='opt"+i+"' name='opt"+i+"' value='"+i+"'>" + 
+      "</td>" + 
+      "<td colspan='2' id='option'>" + 
+        "R: <input type = 'text' name='answer_op"+i+"' id='answer_op"+i+"'>" + 
+      "</td></tr> ";
      // }
       break;
 
@@ -45,8 +51,12 @@ function createOptions(){
         i = 0;
       }
       i++;
-      a = "<tr id='option"+i+"'><td></td><td colspan='4'><input type = 'text' id ='mc"+i+"' name='mc"+i+"'>" + 
-      "<input type = 'radio' name = 'answer_mc' id='answer_mc"+i+"' value = 'answer_mc"+i+"'> </td></tr> " ;
+      a = "<tr id='option"+i+"'>" + 
+      "<td></td>" + 
+      "<td colspan='4'> " + 
+        "<input type = 'text' id ='opt"+i+"' name='opt"+i+"' value='"+i+"'>" + 
+        "<input type = 'radio' id='answer_mc' name='answer_mc' value='"+i+"'>" + 
+      "</td></tr>";
       break;
 
      case "3":
@@ -57,8 +67,12 @@ function createOptions(){
         i = 0;
       }
       i++;
-      a = "<tr id='option"+i+"'><td></td><td colspan='4'><input type = 'text' id ='tf"+i+"' name='tf"+i+"' value='"+i+"'>" + 
-      "<input type = 'checkbox' id ='answer_tf"+i+"' name='answer_tf"+i+"'value = 'answer_tf"+i+"'> </td></tr> " ;
+      a = "<tr id='option"+i+"'>" +
+      "<td></td>" +
+      "<td colspan='4'>" + 
+        "<input type = 'text' id ='tf"+i+"' name='tf"+i+"' value='"+i+"'>" + 
+        "<input type = 'checkbox' id ='answer_tf"+i+"' name='answer_tf"+i+"' value='"+i+"'>" + 
+      "</td></tr>";
       break;
    }
 

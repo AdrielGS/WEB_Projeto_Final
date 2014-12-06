@@ -13,7 +13,7 @@ class questoes extends Controller
 	}
 
 	public function add(){
-		echo "<base href='<?php echo URL; ?>'";
+		
 		$subject = $_POST["subject_opt"];
 		$type = $_POST["type"];
 		$tags = $_POST["tags"];
@@ -36,26 +36,34 @@ class questoes extends Controller
 				}	
 				break;
 			case '2':
-				while ( !empty($_POST["mc" . $i])) {
-					$opcoes[($i - 1)] = $_POST["mc" . $i];
+				while ( !empty($_POST["opt" . $i])) {
+					$opcoes[($i - 1)] = $_POST["opt" . $i];
+					$resp[($i - 1)] = 0;
 					$i++;
 				}
-				$resp[0] = $_POST["answer_mc"];
+				$indice = $_POST["answer_mc"];
+				echo $indice;
+				$indice--;
+				$resp[ $indice ] = 1;
 				break;
 			
 			case '3':
-				while ( !empty(_POST["tf".$i])) {
+				while ( !empty($_POST["tf".$i])) {
 					$opcoes[($i - 1)] = $_POST["tf" . $i];
 					if(isset($_POST["answer_tf" . $i])) {
-						$resp[$j] = $_POST["answer_tf" . $i];
-						$j++;
+						$resp[($i - 1)] = 1;
 					}
+					else
+						$resp[($i - 1)] = 0;
 					$i++;
 				}
 				break;
 		}
 		
-		# var_dump($opcoes);
+		echo "<br/>Perguntas:<br/>";
+		var_dump($opcoes);
+		echo "<br/>Respostas:<br/>";
+		var_dump($resp);
 
 /*
 		if ($type == 1) {

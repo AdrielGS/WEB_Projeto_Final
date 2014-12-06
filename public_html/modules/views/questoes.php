@@ -2,7 +2,6 @@
 <head>
   <title> Teste 01 </title>
   <meta charset = 'UTF-8' />
-  <base href="<?php echo URL; ?>">
   <script type="text/javascript" src="js/js.js">
   </script>
 </head> 
@@ -10,6 +9,7 @@
 <body >
   <!-- Aparece depois de selecionar materia no SELECT -->
   <h1 id = "subject"> Selecione a matéria:  </h1>
+  
   <form method='POST' action="questoes/add">
     <table id = "table">
      <tr> 
