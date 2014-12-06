@@ -70,6 +70,9 @@ class questoes extends Controller
 		echo "<br/>Respostas:<br/>";
 		var_dump($resp);
 
+		$Questao = new Questao();
+		$Questao->add();
+
 /*
 		if ($type == 1) {
 			for ($i=0; $i <  ; $i++) { 
