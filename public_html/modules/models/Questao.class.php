@@ -11,10 +11,10 @@ class Questao extends DB
 
 public function add(){
 		ob_start();
-		include 'questoes.php';
+		include 'questoesController.php';
 		$conteudo = ob_get_contents();
 		ob_end_clean();
-		$tamOpcoes = count($opcoes)
+		$tamOpcoes = count($opcoes);
 		for ($cont=0; $cont < $tamOpcoes; $cont++) {
 			$value = $opcoes[$cont];
 			$correct = $resp[$cont]; 
