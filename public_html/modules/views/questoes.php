@@ -1,15 +1,14 @@
-<html>
-<head>
-  <title> Teste 01 </title>
-  <meta charset = 'UTF-8' />
-  <script type="text/javascript" src="js/js.js">
-  </script>
-</head> 
+<?php include PAGES."header.php"; ?>
 
-<body >
+<aside>
+  <a href="http://localhost/WEB_Projeto_Final/public_html/questoes">Professor</a>
+  <a href="http://localhost/WEB_Projeto_Final/public_html/questoes">Aluno</a>
+</aside>
+
+<article>
   <!-- Aparece depois de selecionar materia no SELECT -->
   <h1 id = "subject"> Selecione a matéria:  </h1>
-  
+
   <form method='POST' action="questoes/add">
     <table id = "table">
      <tr> 
@@ -59,6 +58,6 @@
 <input type = "reset" value = "Limpar" >
 <input type = "submit" value = "Enviar" >
 </form>
-</body>
+</article>
 
-</html>
+<?php include PAGES."footer.php"; ?>

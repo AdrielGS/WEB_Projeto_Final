@@ -42,7 +42,6 @@ class questoes extends Controller
 					$i++;
 				}
 				$indice = $_POST["answer_mc"];
-				echo $indice;
 				$indice--;
 				$resp[ $indice ] = 1;
 				break;
