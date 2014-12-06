@@ -5,6 +5,7 @@
 */
 class questoes extends Controller
 {
+	$question_id = 0;
 	
 	function __construct(){}
 
@@ -19,8 +20,8 @@ class questoes extends Controller
 		$tags = $_POST["tags"];
 		$difficulty = $_POST['difficulty'];
 		$question = $_POST["question"];
-		$numero_opcoes = "<script src='js/js.js'></script><script>document.write(i)</script>";
 		$i = 1;
+		$opcoes = array();
 		$resp = array();
 		$j = 0;
 		
@@ -32,7 +33,7 @@ class questoes extends Controller
 				while ( !empty($_POST["opt" . $i]) ) {
 					$opcoes[ ($i - 1) ] = $_POST["opt" . $i];
 					$resp[($i - 1)] = $_POST["answer_op".$i];
-					$i++;	
+					$i++; 	
 				}	
 				break;
 			case '2':
@@ -57,6 +58,10 @@ class questoes extends Controller
 						$resp[($i - 1)] = 0;
 					$i++;
 				}
+				break;
+			
+			default:
+				$question_id++;
 				break;
 		}
 		
