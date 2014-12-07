@@ -5,7 +5,7 @@
 */
 class questoes extends Controller
 {
-	$question_id = 0;
+	//$question_id = 0;
 	
 	function __construct(){}
 
@@ -23,55 +23,65 @@ class questoes extends Controller
 		$i = 1;
 		$opcoes = array();
 		$resp = array();
-		$j = 0;
+		$correct = array();
 		
 		/*$opcao = $_POST["opt1"];
 		$opcao2 = $_POST["opt2"];
 		echo ">>>" . $numero_opcoes . $subject . "<br/>" . $opcao . "  " . $opcao2;*/
-		switch ($type) {
+		
+		try{
+
+			switch ($type) {
 			case '1':
 				while ( !empty($_POST["opt" . $i]) ) {
 					$opcoes[ ($i - 1) ] = $_POST["opt" . $i];
 					$resp[($i - 1)] = $_POST["answer_op".$i];
+					$correct[($i - 1)] = 1;
 					$i++; 	
 				}	
 				break;
 			case '2':
 				while ( !empty($_POST["opt" . $i])) {
 					$opcoes[($i - 1)] = $_POST["opt" . $i];
-					$resp[($i - 1)] = 0;
+					$correct[($i - 1)] = 0;
 					$i++;
 				}
 				$indice = $_POST["answer_mc"];
 				echo $indice;
 				$indice--;
-				$resp[ $indice ] = 1;
+				$correct[ $indice ] = 1;
 				break;
 			
 			case '3':
 				while ( !empty($_POST["tf".$i])) {
 					$opcoes[($i - 1)] = $_POST["tf" . $i];
 					if(isset($_POST["answer_tf" . $i])) {
-						$resp[($i - 1)] = 1;
+						$correct[($i - 1)] = 1;
 					}
 					else
-						$resp[($i - 1)] = 0;
+						$correct[($i - 1)] = 0;
 					$i++;
 				}
 				break;
 			
-			default:
-				$question_id++;
-				break;
+			
+			}
+
 		}
+		catch(Object $error){
+
+			echo $error->getMessage();
+
+		}
+		
 		
 		echo "<br/>Perguntas:<br/>";
 		var_dump($opcoes);
 		echo "<br/>Respostas:<br/>";
 		var_dump($resp);
 
-		$Questao = new Questao();
-		$Questao->add();
+		$nova_questao = new Questao();
+		$nova_questao->add($question, $type, $difficulty, $subject, $tags, $opcoes, $resp, $correct);
 
 /*
 		if ($type == 1) {
