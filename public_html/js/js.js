@@ -82,15 +82,17 @@ function createOptions(){
 function addTag(value){
   
   if (value == 'add') {
-    document.getElementById('subject').innerHTML = 'Adicionar materia.';
-    var txt = "<td colspan='3'><input type = 'text' id = 'newTag' onchange='changeTitle(this.value)'> </td>";
+    document.getElementById('subject').innerHTML = 'Adicionar materia';
+    var txt = "<td colspan='3'><input type = 'text' id = 'newTag' onchange='changeTitle(this.value), setValue()'> </td>";
     document.getElementById("select_subject").insertAdjacentHTML('afterEnd', txt);
+   
   }
   // MARRETA ! 
   else{
     if(document.getElementById("newTag")){
       document.getElementById("newTag").outerHTML = "";
     }
+    document.getElementById("new_subject").value = "add";
   }
 
 }
@@ -98,5 +100,10 @@ function addTag(value){
 function changeTitle(title){
   
   document.getElementById('subject').innerHTML = title;
+
+}
+
+function setValue(){
+   document.getElementById("new_subject").value = document.getElementById("newTag").value;
 
 }

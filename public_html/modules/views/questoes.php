@@ -15,9 +15,10 @@
      <tr> 
       <td id="select_subject">
        <select id = "subject_opt" name="subject_opt" onchange="changeTitle(this.value), addTag(this.value)">
+        <option> Selecione:  </option>
         <option> Materia 01 </option>
         <option> Materia 02 </option>
-        <option value="add" > Adicionar </option>
+        <option value="add" id = "new_subject" > Adicionar </option>
         <!-- se for adicionar nova materia, aparece um prompt ou input ao lado -->
       </select>
 
