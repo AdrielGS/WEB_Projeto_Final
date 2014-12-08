@@ -103,16 +103,13 @@
 			$str_difficulty = "";
 
 			if($subject == "Todas")
-				for($i=0; $i < count($subject); $i++)
-					$subject[$i] = $i;
+				$subject = DB::conn()->prepare("SELECT subject FROM __questions_question");
 						
 			if($type == null)
-				for($i=0; $i < count($type); $i++)
-					$type[$i] = $i;	;
+				$type = DB::conn()->prepare("SELECT type FROM __questions_question");
 
 			if($difficulty == null)
-				for($i=0; $i < count($difficulty); $i++)
-					$difficulty[$i] = $i;			
+				$difficulty = DB::conn->prepare("SELECT difficulty FROM __questions_question");			
 /*
 			echo "<br/>" . $subject;
 			var_dump($type);
