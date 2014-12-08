@@ -98,41 +98,51 @@
 	}
 
 	public function getFilter($subject, $type, $difficulty){
+			
 			$str_type = "";
 			$str_difficulty = "";
 
 			if($subject == "Todas")
-				$subject = "*";
+				for($i=0; $i < count($subject); $i++)
+					$subject[$i] = $i;
+						
 			if($type == null)
-				$type = "*";
+				for($i=0; $i < count($type); $i++)
+					$type[$i] = $i;	;
+
 			if($difficulty == null)
-				$difficulty = "*";			
+				for($i=0; $i < count($difficulty); $i++)
+					$difficulty[$i] = $i;			
 /*
 			echo "<br/>" . $subject;
 			var_dump($type);
 			var_dump($difficulty);
 */			for($i=0; $i < count($type); $i++)
-				$str_type .= " OR type = ':type". $i. "'";
+				if($i == 0)
+					$str_type .= "type = :type". $i;
+				else
+					$str_type .= " OR type = :type". $i;
 
 			for($i=0; $i < count($difficulty); $i++)
-				$str_difficulty .= " OR difficulty = ':difficulty". $i. "'";
+				if($i == 0)
+					$str_difficulty .= " difficulty = :difficulty". $i;
+				else 
+					$str_difficulty .= " OR difficulty = :difficulty". $i;
 
 
 			echo "<br/>" . $str_type;
 			echo "<br/>" . $str_difficulty;
 
 
-		$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE subject = ':subject'$str_type$str_difficulty");
+		$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE subject = :subject AND $str_type AND $str_difficulty");
 		var_dump($query_questoes);
-		var_dump($type);
-		var_dump($difficulty);
 		$query_questoes->bindValue(':subject', $subject, PDO::PARAM_STR);
 
 		for($i=0; $i < count($type); $i++)
-			$query_questoes->bindValue("':type".$i."'", $type[$i], PDO::PARAM_INT);
+			$query_questoes->bindValue(':type'.$i, $type[$i], PDO::PARAM_INT);
 
 		for($i=0; $i < count($difficulty); $i++)
-			$query_questoes->bindValue("':difficulty".$i."'", $difficulty[$i], PDO::PARAM_INT);
+			$query_questoes->bindValue(':difficulty'.$i, $difficulty[$i], PDO::PARAM_INT);
 
 		$query_questoes->execute();
 
