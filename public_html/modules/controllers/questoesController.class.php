@@ -80,8 +80,8 @@ class questoes extends Controller
 		echo "<br/>Respostas:<br/>";
 		var_dump($resp);
 
-		$nova_questao = new Questao();
-		$nova_questao->add($question, $type, $difficulty, $subject, $tags, $opcoes, $resp, $correct);
+		$new_questao = new Questao();
+		$new_questao->add($question, $type, $difficulty, $subject, $tags, $opcoes, $resp, $correct);
 
 /*
 		if ($type == 1) {
@@ -100,6 +100,9 @@ class questoes extends Controller
 		$questao->add($enunciado, $tipo, $materia, $dificuldade, $resposta, $opcoes);*/
 
 	}
+	
+
+
 }
 
 ?>

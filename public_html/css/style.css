@@ -1,0 +1,179 @@
+a:link, a:visited{text-decoration:none}
+a:hover, a:active{text-decoration:none}
+
+body, html{
+	width:100%;
+	height:calc(100% - 53px);
+	font:normal 13px 'Segoe UI', Verdana, Arial, sans-serif;
+	background: #E8EAF6;
+}
+
+body{
+	margin:53px 0px 0px 0px;
+}
+
+nav{
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+	background:#3F51B5;
+	overflow:hidden;
+	font-size:1.4em;
+	color:#fff;
+	box-shadow:0px 0px 6px 0px rgba(0,0,0,.6);
+	z-index:100
+}
+
+#logo{
+	width:212px;
+	height:53px;
+	position:fixed;
+	top:0px;
+	left:50%;
+	margin-left:-106px;
+	background:url(../images/logo.png);
+}
+
+#user{
+	display:table; 
+	float:right;
+	padding:10px;
+	font-weight:bold;
+}
+
+#user > span{
+	display:table-cell;
+	vertical-align:middle;
+}
+
+#user:hover{
+	background:#5C6BC0;
+	cursor:pointer;
+}
+
+#userPhoto{
+	width:33px;
+	height:33px;
+	float:left;
+	margin-right:5px;
+	border-radius:3px;
+	border-display:none;
+	background-size:33px 33px;
+}
+
+#menu{
+	width:23%;
+	display:block;
+	overflow:hidden;
+	float:left;
+	cursor:context-menu;
+	height:53px;
+}
+
+#menuIcon{
+	float:left;
+	padding:5px;
+	width:43px;
+}
+
+#menuIcon > span{
+	display:block;
+	background:#fff;
+	border-radius:10px;
+	padding:3px;
+	margin:6px;
+}
+
+#menuIcon + h2{
+	padding:12px;
+	margin:0px;
+	float:left;
+	font-size:20px;
+}
+
+
+#menuLinks{
+	position:fixed;
+	top:53px;
+	left:0px;
+	width:23%;
+	height:0px;
+	background:#3F51B5;
+	overflow: hidden;
+	/*box-shadow:0px 0px 6px 0px rgba(0,0,0,.6);*/
+}
+
+#menu:hover > #menuLinks{
+	height: 100%;
+}
+
+#menuLinks > a{
+	display:block;
+	padding:10px;
+	color:#fff;
+}
+
+#menuLinks > a:hover{
+	background:#5C6BC0;
+}
+
+aside{
+	position:fixed;
+	top:75px;
+	margin-left:7px;
+	width:20%;
+	border-radius:4px 0px 0px 4px;
+	box-shadow:0px 0px 6px 0px rgba(0,0,0,.6);
+}
+
+
+aside > a:first-child{
+	border-radius:4px 0px 0px 0px;
+}
+
+aside > a:last-child{
+	border-radius:0px 0px 0px 4px;
+}
+
+aside > a:active, a:active:hover{
+	background: #fff;
+	color: #3F51B5;
+	box-shadow:6px 0px 0px 0px rgba(255,255,255,1);
+}
+
+aside > a, aside > span{
+	display:block;
+	background:blue;
+	padding:10px;
+	background:#3F51B5;
+	color:#fff;
+	cursor:pointer;
+}
+
+aside > a:hover{
+	background:#5C6BC0;
+}
+
+aside > span > a{
+	display:none;
+}
+
+aside > span:active > a{
+	display:block;
+}
+
+article{
+	width:calc(80% - 17px);
+	margin:10px 10px 10px 10px;
+	float:right;
+	overflow:hidden;
+	height:90%;
+	box-shadow:0px 0px 6px 0px rgba(0,0,0,.6);
+	background: white;
+	border-radius:3px;
+}
+
+* {
+	transition:height 0.3s ease;
+}
