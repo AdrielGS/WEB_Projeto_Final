@@ -101,6 +101,7 @@
 			$str_subject = "";
 			$str_type = "";
 			$str_difficulty = "";
+<<<<<<< HEAD
 			$Bsucject = false;
 
 			if($subject == "Todas"){
@@ -114,10 +115,17 @@
 			if($type == null)
 				for($i=0; $i < count($type); $i++)
 					$type[$i] = $i;
+=======
+
+			if($subject == "Todas")
+				$subject = DB::conn()->prepare("SELECT subject FROM __questions_question");
+						
+			if($type == null)
+				$type = DB::conn()->prepare("SELECT type FROM __questions_question");
+>>>>>>> origin/master
 
 			if($difficulty == null)
-				for($i=0; $i < count($difficulty); $i++)
-					$difficulty[$i] = $i;			
+				$difficulty = DB::conn->prepare("SELECT difficulty FROM __questions_question");			
 /*
 			echo "<br/>" . $subject;
 			var_dump($type);
