@@ -130,8 +130,13 @@
 					$allType = true;
 				}
 				else{
-					if ($i == 0)
-						$str_type .= "AND type = :type". $i;	
+					if ($i == 0){
+						if ($allSucject == true) {
+							$str_type .= "type = :type". $i;
+						}
+						else
+							$str_type .= "AND type = :type". $i;
+					}
 					else
 						$str_type .= " OR type = :type". $i;
 					
