@@ -101,19 +101,21 @@
 			$str_subject = "";
 			$str_type = "";
 			$str_difficulty = "";
-			$Bsucject = false;
+			$allSucject = true;
 
 			if($subject == "Todas"){
 				$str_subject = "";
 			}
 			else{
 				$str_subject = "subject = :subject";
-				$Bsucject = true;
+				$allSucject = false;
 			}
 						
-			if($type == null)
-				for($i=0; $i < count($type); $i++)
-					$type[$i] = $i;
+			if($type == null){
+				$str_type = "";
+				$allType = true;
+			}
+
 
 			if($difficulty == null)
 				for($i=0; $i < count($difficulty); $i++)
@@ -123,8 +125,10 @@
 			var_dump($type);
 			var_dump($difficulty);
 */			for($i=0; $i < count($type); $i++)
-				if($subject == "Todas")
+				if($subject == "Todas" && $allType == false){
 					$str_type .= "type = :type". $i;
+					$allType = true;
+				}
 				else{
 					if ($i == 0)
 						$str_type .= "AND type = :type". $i;	
@@ -147,7 +151,7 @@
 		$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE $str_subject $str_type AND $str_difficulty");
 		print_r($query_questoes);
 
-		if ($Bsucject == true) {
+		if ($allSucject == false) {
 			$query_questoes->bindValue(':subject', $subject, PDO::PARAM_STR);	
 		}
 
