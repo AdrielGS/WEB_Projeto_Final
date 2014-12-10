@@ -113,7 +113,7 @@
 			else{
 				$str_subject = "subject = :subject";
 				$allSubject = false;
-				$firstDifficulty == false;
+				$firstDifficulty = false;
 			}
 						
 			if($type == null){
@@ -165,10 +165,12 @@
 
 		if ($allDifficulty == true && $allSubject == true && $allType == true) {
 			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question");
+			$query_id = DB::conn()->prepare("SELECT id FROM __questions_question");
 		}
-		else
+		else {
 			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
-		
+			$query_id = DB::conn()->prepare("SELECT id FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
+		}
 		
 		print_r($query_questoes);
 
@@ -183,15 +185,45 @@
 			$query_questoes->bindValue(':difficulty'.$i, $difficulty[$i], PDO::PARAM_INT);
 
 		$query_questoes->execute();
+		$query_id->execute();
 
+		$id[] = $query_id->fetchAll();
+		$str_id = "";
+		$firstID = true;
 
-/*
-		$query_options = DB::conn()->prepare("SELECT * FROM __questions_options ");
-		$query_options->execute();
+		for($i = 0; $i<count($id); $i++) {
+			if (count($id) > 0) {
+							
+				if ($firstID) {
+					$str_id = "question_id = :id".$i;
+					$firstID = false;
+				}
+				else
+					$str_id = "OR question_id = :id".$i;
+			}
+		}
+		if ($type != 1) {
+			$query_options = DB::conn()->prepare("SELECT * FROM __questions_options WHERE $str_id ");
+			$query_correct = DB::conn()->prepare("SELECT value FROM __questions_options WHERE $str_id AND correct = :correct ");
+			$query_correct->bindValue(':correct', 1, PDO::PARAM_INT);
+			for ($i=0; $i < count($id); $i++) { 
+				$query_options->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
+			}
+			$query_options->execute();
+			$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
+			$query['correct'] = $query_correct->fetchAll(PDO::FETCH_OBJ);
+		}
+		else {
+			$query_open = DB::conn()->prepare("SELECT * FROM __questions_open WHERE $str_id ");
+			for ($i=0; $i < count($id); $i++) { 
+				$query_open->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
+			}
+			$query_open->execute();
+			$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);	
+		}
+		
 
-		$query_open = DB::conn()->prepare("SELECT * FROM __questions_open ");
-		$query_open->execute();
-*/
+		
 		$query['questions'] = $query_questoes->fetchAll(PDO::FETCH_OBJ);
 		/*$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
 		$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);
@@ -204,6 +236,8 @@
 		echo "<br/>";
 		echo "<br/>";
 		print_r($query['questions']);
+		print_r($query['open']);
+		print_r($query['options']);
 
 
 		return $query;

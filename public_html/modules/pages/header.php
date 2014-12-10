@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- <base href="<?php echo URL; ?>"> -->
+	
 	<meta charset="UTF-8">
 	<title>INF</title>
 	<link rel="stylesheet" href="css/style.css">
-	<script type="text/javascript" src="js/js.js"></script>
+	<script src="js/js.js"></script>
 	<?php
 		$username = isset($user->name) ? $user->name : "Convidado";
 	?>
@@ -33,7 +33,7 @@
 				<a href="home/logout">Logout</a>
 			</div>
 		</div>
-
+		<div id="logo"></div>
 		<div id="user">
 			<img id="userPhoto"
 				src="http://dummyimage.com/50x50/FF9800/FFF.png

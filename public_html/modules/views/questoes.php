@@ -1,22 +1,24 @@
-<?php include PAGES."header.php"; ?>
+<html>
+<head>
+  <title> Questoes </title>
+  <meta charset = 'UTF-8' />
+  <script type="text/javascript" src="js/js.js">
+  </script>
+</head> 
 
-<aside>
-  <a href="http://localhost/WEB_Projeto_Final/public_html/questoes">Professor</a>
-  <a href="http://localhost/WEB_Projeto_Final/public_html/questoes">Aluno</a>
-</aside>
-
-<article>
+<body >
   <!-- Aparece depois de selecionar materia no SELECT -->
   <h1 id = "subject"> Selecione a matéria:  </h1>
-
+  
   <form method='POST' action="questoes/add">
     <table id = "table">
      <tr> 
       <td id="select_subject">
        <select id = "subject_opt" name="subject_opt" onchange="changeTitle(this.value), addTag(this.value)">
+        <option> Selecione:  </option>
         <option> Materia 01 </option>
         <option> Materia 02 </option>
-        <option value="add" > Adicionar </option>
+        <option value="add" id = "new_subject" > Adicionar </option>
         <!-- se for adicionar nova materia, aparece um prompt ou input ao lado -->
       </select>
 
@@ -58,6 +60,6 @@
 <input type = "reset" value = "Limpar" >
 <input type = "submit" value = "Enviar" >
 </form>
-</article>
+</body>
 
-<?php include PAGES."footer.php"; ?>
+</html>
