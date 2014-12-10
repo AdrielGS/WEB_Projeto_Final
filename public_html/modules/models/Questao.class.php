@@ -101,61 +101,80 @@
 			$str_subject = "";
 			$str_type = "";
 			$str_difficulty = "";
-<<<<<<< HEAD
-			$Bsucject = false;
+			$allSubject = true;
+			$allType = false;
+			$allDifficulty = false;
+			$firstDifficulty = true;
+			$firstType = true;
 
 			if($subject == "Todas"){
 				$str_subject = "";
 			}
 			else{
 				$str_subject = "subject = :subject";
-				$Bsucject = true;
+				$allSubject = false;
+				$firstDifficulty = false;
 			}
 						
-			if($type == null)
-				for($i=0; $i < count($type); $i++)
-					$type[$i] = $i;
-=======
+			if($type == null){
+				$str_type = "";
+				$allType = true;
+			}
+			else
+				$firstDifficulty = false;
 
-			if($subject == "Todas")
-				$subject = DB::conn()->prepare("SELECT subject FROM __questions_question");
-						
-			if($type == null)
-				$type = DB::conn()->prepare("SELECT type FROM __questions_question");
->>>>>>> origin/master
 
 			if($difficulty == null)
-				$difficulty = DB::conn->prepare("SELECT difficulty FROM __questions_question");			
-/*
-			echo "<br/>" . $subject;
-			var_dump($type);
-			var_dump($difficulty);
-*/			for($i=0; $i < count($type); $i++)
-				if($subject == "Todas")
+				$allDifficulty = true;
+
+
+			for($i=0; $i < count($type); $i++)
+				if($subject == "Todas" && $allType == false && $firstType == true){
 					$str_type .= "type = :type". $i;
+					$firstType = false;
+				}
 				else{
-					if ($i == 0)
-						$str_type .= "AND type = :type". $i;	
+					if ($i == 0){
+						if ($allSubject == true) {
+							$str_type .= "type = :type". $i;
+						}
+						else
+							$str_type .= "AND type = :type". $i;
+					}
 					else
 						$str_type .= " OR type = :type". $i;
 					
 				}
 
 			for($i=0; $i < count($difficulty); $i++)
-				if($i == 0)
+				if ($i == 0 && $allDifficulty == false && $firstDifficulty == true) {
 					$str_difficulty .= " difficulty = :difficulty". $i;
-				else 
-					$str_difficulty .= " OR difficulty = :difficulty". $i;
-
+					$firstDifficulty = false;
+				}
+				else{
+					if ($i == 0 && $firstDifficulty == false) {
+						$str_difficulty .= " AND difficulty = :difficulty". $i;
+					}
+					else{
+						$str_difficulty .= " OR difficulty = :difficulty". $i;
+					}
+				}
 
 			echo "<br/>" . $str_type;
 			echo "<br/>" . $str_difficulty;
 
-
-		$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE $str_subject $str_type AND $str_difficulty");
+		if ($allDifficulty == true && $allSubject == true && $allType == true) {
+			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question");
+			$query_id = DB::conn()->prepare("SELECT id FROM __questions_question");
+		}
+		else {
+			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
+			$query_id = DB::conn()->prepare("SELECT id FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
+		}
+		
 		print_r($query_questoes);
 
-		if ($Bsucject == true) {
+		if ($allSubject == false) {
 			$query_questoes->bindValue(':subject', $subject, PDO::PARAM_STR);	
 		}
 
@@ -166,21 +185,56 @@
 			$query_questoes->bindValue(':difficulty'.$i, $difficulty[$i], PDO::PARAM_INT);
 
 		$query_questoes->execute();
+		$query_id->execute();
 
+		$id[] = $query_id->fetchAll();
+		$str_id = "";
+		$firstID = true;
 
-/*
-		$query_options = DB::conn()->prepare("SELECT * FROM __questions_options ");
-		$query_options->execute();
+		for($i = 0; $i<count($id); $i++) {
+			if (count($id) > 0) {
+							
+				if ($firstID) {
+					$str_id = "question_id = :id".$i;
+					$firstID = false;
+				}
+				else
+					$str_id = "OR question_id = :id".$i;
+			}
+		}
+		if ($type != 1) {
+			$query_options = DB::conn()->prepare("SELECT * FROM __questions_options WHERE $str_id ");
+			for ($i=0; $i < count($id); $i++) { 
+				$query_options->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
+			}
+			$query_options->execute();
+			$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
+		}
+		else {
+			$query_open = DB::conn()->prepare("SELECT * FROM __questions_open WHERE $str_id ");
+			for ($i=0; $i < count($id); $i++) { 
+				$query_open->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
+			}
+			$query_open->execute();
+			$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);	
+		}
+		
 
-		$query_open = DB::conn()->prepare("SELECT * FROM __questions_open ");
-		$query_open->execute();
-*/
+		
 		$query['questions'] = $query_questoes->fetchAll(PDO::FETCH_OBJ);
 		/*$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
 		$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);
 		*/
+		/*	echo "<br/>";
+		echo "<br/>";
+		foreach ($variable as $query) {
+			echo $variable;
+		}*/
+		echo "<br/>";
 		echo "<br/>";
 		print_r($query['questions']);
+		print_r($query['open']);
+		print_r($query['options']);
 
 
 		return $query;
