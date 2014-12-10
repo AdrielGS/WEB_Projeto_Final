@@ -204,11 +204,14 @@
 		}
 		if ($type != 1) {
 			$query_options = DB::conn()->prepare("SELECT * FROM __questions_options WHERE $str_id ");
+			$query_correct = DB::conn()->prepare("SELECT value FROM __questions_options WHERE $str_id AND correct = :correct ");
+			$query_correct->bindValue(':correct', 1, PDO::PARAM_INT);
 			for ($i=0; $i < count($id); $i++) { 
 				$query_options->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
 			}
 			$query_options->execute();
 			$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
+			$query['correct'] = $query_correct->fetchAll(PDO::FETCH_OBJ);
 		}
 		else {
 			$query_open = DB::conn()->prepare("SELECT * FROM __questions_open WHERE $str_id ");
