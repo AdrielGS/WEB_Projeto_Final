@@ -1,5 +1,5 @@
-<?php class Questao extends DB
-{
+<?php 
+class Questao extends DB {
 	
 	public function __construct()
 	{}
@@ -31,46 +31,46 @@
 
 			case "0":
 
-				$value = $opcoes[0];
-				$right = $correct[0]; 
-				$answer = $resp[0]; 
-				$query_questao = DB::conn()->prepare("UPDATE __questions_question SET value = :value WHERE id = :question_id");
-				$query_questao->bindValue(':value', $value, PDO::PARAM_STR);
-				$query_questao->bindValue(':question_id', $question_id, PDO::PARAM_INT);
-				$query_questao->execute();
+			$value = $opcoes[0];
+			$right = $correct[0]; 
+			$answer = $resp[0]; 
+			$query_questao = DB::conn()->prepare("UPDATE __questions_question SET value = :value WHERE id = :question_id");
+			$query_questao->bindValue(':value', $value, PDO::PARAM_STR);
+			$query_questao->bindValue(':question_id', $question_id, PDO::PARAM_INT);
+			$query_questao->execute();
 
-				$query_opcoes = DB::conn()->prepare("INSERT INTO __questions_options (question_id, value, correct) VALUES (:question_id, :answer, :correct)");
-				$query_opcoes->bindValue(':question_id', $question_id, PDO::PARAM_INT);
-				$query_opcoes->bindValue(':answer', $answer, PDO::PARAM_STR);
-				$query_opcoes->bindValue(':correct', $right, PDO::PARAM_INT);
-				$query_opcoes->execute();
+			$query_opcoes = DB::conn()->prepare("INSERT INTO __questions_options (question_id, value, correct) VALUES (:question_id, :answer, :correct)");
+			$query_opcoes->bindValue(':question_id', $question_id, PDO::PARAM_INT);
+			$query_opcoes->bindValue(':answer', $answer, PDO::PARAM_STR);
+			$query_opcoes->bindValue(':correct', $right, PDO::PARAM_INT);
+			$query_opcoes->execute();
 
-				break;
+			break;
 
 			case '1':
-				for ($cont = 0; $cont < $tamOpcoes; $cont++) {
-					$value = $opcoes[$cont];
-					$answer = $resp[$cont]; 
-					$query_opcoes = DB::conn()->prepare("INSERT INTO __questions_open (question_id, value, answer) VALUES (:question_id, :value, :answer)");
-					$query_opcoes->bindValue(':question_id', $question_id, PDO::PARAM_INT);
-					$query_opcoes->bindValue(':value', $value, PDO::PARAM_STR);
-					$query_opcoes->bindValue(':answer', $answer, PDO::PARAM_STR);
-					$query_opcoes->execute();
-				}
-				break;
+			for ($cont = 0; $cont < $tamOpcoes; $cont++) {
+				$value = $opcoes[$cont];
+				$answer = $resp[$cont]; 
+				$query_opcoes = DB::conn()->prepare("INSERT INTO __questions_open (question_id, value, answer) VALUES (:question_id, :value, :answer)");
+				$query_opcoes->bindValue(':question_id', $question_id, PDO::PARAM_INT);
+				$query_opcoes->bindValue(':value', $value, PDO::PARAM_STR);
+				$query_opcoes->bindValue(':answer', $answer, PDO::PARAM_STR);
+				$query_opcoes->execute();
+			}
+			break;
 
 			case '2':
 			case '3':
-				for ($cont = 0; $cont < $tamOpcoes; $cont++) {
-					$value = $opcoes[$cont];
-					$right = $correct[$cont]; 
-					$query_opcoes = DB::conn()->prepare("INSERT INTO __questions_options (question_id, value, correct) VALUES (:question_id, :value, :correct)");
-					$query_opcoes->bindValue(':question_id', $question_id, PDO::PARAM_INT);
-					$query_opcoes->bindValue(':value', $value, PDO::PARAM_STR);
-					$query_opcoes->bindValue(':correct', $right, PDO::PARAM_INT);
-					$query_opcoes->execute();
-				}
-				break;		
+			for ($cont = 0; $cont < $tamOpcoes; $cont++) {
+				$value = $opcoes[$cont];
+				$right = $correct[$cont]; 
+				$query_opcoes = DB::conn()->prepare("INSERT INTO __questions_options (question_id, value, correct) VALUES (:question_id, :value, :correct)");
+				$query_opcoes->bindValue(':question_id', $question_id, PDO::PARAM_INT);
+				$query_opcoes->bindValue(':value', $value, PDO::PARAM_STR);
+				$query_opcoes->bindValue(':correct', $right, PDO::PARAM_INT);
+				$query_opcoes->execute();
+			}
+			break;		
 			
 		}
 		
@@ -98,80 +98,78 @@
 	}
 
 	public function getFilter($subject, $type, $difficulty){
-			$str_subject = "";
-			$str_type = "";
-			$str_difficulty = "";
-			$allSubject = true;
-			$allType = false;
-			$allDifficulty = false;
-			$firstDifficulty = true;
-			$firstType = true;
+		$str_subject = "";
+		$str_type = "";
+		$str_difficulty = "";
+		$allSubject = true;
+		$allType = false;
+		$allDifficulty = false;
+		$firstDifficulty = true;
+		$firstType = true;
 
-			if($subject == "Todas"){
-				$str_subject = "";
+		if($subject == "Todas"){
+			$str_subject = "";
+		}
+		else{
+			$str_subject = "subject = :subject";
+			$allSubject = false;
+			$firstDifficulty = false;
+		}
+
+		if($type == null){
+			$str_type = "";
+			$allType = true;
+		}
+		else
+			$firstDifficulty = false;
+
+
+		if($difficulty == null)
+			$allDifficulty = true;
+
+
+		for($i=0; $i < count($type); $i++){
+			if($subject == "Todas" && $allType == false && $firstType == true){
+				$str_type .= "type = :type". $i;
+				$firstType = false;
 			}
 			else{
-				$str_subject = "subject = :subject";
-				$allSubject = false;
-				$firstDifficulty = false;
-			}
-						
-			if($type == null){
-				$str_type = "";
-				$allType = true;
-			}
-			else
-				$firstDifficulty = false;
-
-
-			if($difficulty == null)
-				$allDifficulty = true;
-
-
-			for($i=0; $i < count($type); $i++)
-				if($subject == "Todas" && $allType == false && $firstType == true){
-					$str_type .= "type = :type". $i;
-					$firstType = false;
-				}
-				else{
-					if ($i == 0){
-						if ($allSubject == true) {
-							$str_type .= "type = :type". $i;
-						}
-						else
-							$str_type .= "AND type = :type". $i;
+				if ($i == 0){
+					if ($allSubject == true) {
+						$str_type .= "type = :type". $i;
 					}
 					else
-						$str_type .= " OR type = :type". $i;
-					
+						$str_type .= "AND type = :type". $i;
 				}
+				else
+					$str_type .= " OR type = :type". $i;
+			}
+		}
 
-			for($i=0; $i < count($difficulty); $i++)
-				if ($i == 0 && $allDifficulty == false && $firstDifficulty == true) {
-					$str_difficulty .= " difficulty = :difficulty". $i;
-					$firstDifficulty = false;
+		for($i=0; $i < count($difficulty); $i++){
+			if ($i == 0 && $allDifficulty == false && $firstDifficulty == true) {
+				$str_difficulty .= " difficulty = :difficulty". $i;
+				$firstDifficulty = false;
+			}
+			else{
+				if ($i == 0 && $firstDifficulty == false) {
+					$str_difficulty .= " AND difficulty = :difficulty". $i;
 				}
 				else{
-					if ($i == 0 && $firstDifficulty == false) {
-						$str_difficulty .= " AND difficulty = :difficulty". $i;
-					}
-					else{
-						$str_difficulty .= " OR difficulty = :difficulty". $i;
-					}
+					$str_difficulty .= " OR difficulty = :difficulty". $i;
 				}
-
-			echo "<br/>" . $str_type;
-			echo "<br/>" . $str_difficulty;
+			}
+		}
 
 		if ($allDifficulty == true && $allSubject == true && $allType == true) {
 			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question");
-			$query_id = DB::conn()->prepare("SELECT id FROM __questions_question");
+			/*Chico*/$query_id = DB::conn()->prepare("SELECT id FROM __questions_question");
 		}
 		else {
 			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
-			$query_id = DB::conn()->prepare("SELECT id FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
+			/*Chico*/$query_id = DB::conn()->prepare("SELECT id FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
 		}
-		
+
 		print_r($query_questoes);
 
 		if ($allSubject == false) {
@@ -185,15 +183,16 @@
 			$query_questoes->bindValue(':difficulty'.$i, $difficulty[$i], PDO::PARAM_INT);
 
 		$query_questoes->execute();
-		$query_id->execute();
+		//$query_id->execute();
 
+		/*Chico -> */
 		$id[] = $query_id->fetchAll();
 		$str_id = "";
 		$firstID = true;
 
 		for($i = 0; $i<count($id); $i++) {
 			if (count($id) > 0) {
-							
+
 				if ($firstID) {
 					$str_id = "question_id = :id".$i;
 					$firstID = false;
@@ -209,7 +208,7 @@
 			for ($i=0; $i < count($id); $i++) { 
 				$query_options->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
 			}
-			$query_options->execute();
+			/*ERRO $query_options->execute();*/
 			$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
 			$query['correct'] = $query_correct->fetchAll(PDO::FETCH_OBJ);
 		}
@@ -221,30 +220,26 @@
 			$query_open->execute();
 			$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);	
 		}
-		
+		/* <- Chico*/
 
-		
+
 		$query['questions'] = $query_questoes->fetchAll(PDO::FETCH_OBJ);
+		
 		/*$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
 		$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);
 		*/
-		/*	echo "<br/>";
-		echo "<br/>";
-		foreach ($variable as $query) {
-			echo $variable;
-		}*/
-		echo "<br/>";
-		echo "<br/>";
+
+		echo "<br/><br/>_question: <br/>";
 		print_r($query['questions']);
-		print_r($query['open']);
-		print_r($query['options']);
+		/*ERRO print_r($query['open']);*?/
+		/*ERRO print_r($query['options']);*/
 
 
 		return $query;
 
-	}
+	}//Fim function getFilter
 
-}
+}//Fim Class
 
 
- ?>
+?>
