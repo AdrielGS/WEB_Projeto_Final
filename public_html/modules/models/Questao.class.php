@@ -188,24 +188,33 @@
 
 		$aux = 0;
 		$id = array();
-		while ($take = $query_questoes->setFetchMode(PDO::FETCH_ASSOC)) {
-			if ($take['correct'] == 1) {
-				if ($firstID == true) 
-					$str_id = "id = :id";
-				else
-					$str_id .="AND id = :id";
-				$id[$aux] = $take['id'];
-				$aux++;
-			}
-		};
+		$take = $query_questoes->setFetchMode(PDO::FETCH_ASSOC);
+		while ($row = $query_questoes->fetch())) {
+			$id[$aux] = $row['id'];
+			if ($firstID == true) 
+				$str_id = "question_id = :id";
+			else
+				$str_id = "AND question_id = :id";
+			$aux++;
+		}
+
 
 		if ($type != 1) {
 			$query_options = DB::conn()->prepare("SELECT * FROM __questions_options WHERE $str_id ");
+			
 			for ($i=0; $i < count($id); $i++) { 
 				$query_options->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
 			}
 			$query_options->execute();
+			$take = $query_options->setFetchMode(PDO::FETCH_ASSOC);
+			$correct = array();
+			$aux;
+			while ($row = $query_options->fetch()) {
+				if($row['correct'] == 1)
+					$correct = $row['value'];
+			}
 			$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
+
 		}
 		else {
 			$query_open = DB::conn()->prepare("SELECT * FROM __questions_open WHERE $str_id ");
@@ -213,6 +222,12 @@
 				$query_open->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
 			}
 			$query_open->execute();
+			$take = $query_open->setFetchMode(PDO::FETCH_ASSOC);
+			$correct = array();
+			$aux = 0;
+			while ($row = $query_open->fetch()) {
+				$correct[$aux] = $row['value'];
+			}
 			$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);	
 		}
 		
@@ -233,6 +248,8 @@
 		print_r($query['open']);
 		print_r($query['options']);
 
+		echo "Certa(s)";
+		print_r($correct);
 
 		return $query;
 
