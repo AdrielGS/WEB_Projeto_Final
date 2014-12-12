@@ -1,14 +1,12 @@
-<?php include PAGES.'header.php'; ?>
+<?php include PAGES.'header.php' ?>
 
 <aside>
-  <a href="questoes">Home</a>
-  <a href="questoes/insert">Inserir</a>
+  <a href="questoes">Inserir</a>
   <a href="listar">Listar</a>
 </aside>
 
 
 <article>
-
   <h1 id = "subject"> Selecione a matéria:  </h1>
   
   <form method='POST' action="questoes/add">
@@ -62,4 +60,4 @@
 </form>
 </article>
 
-<?php include PAGES.'footer.php'; ?>
+<?php include PAGES.'footer.php' ?>

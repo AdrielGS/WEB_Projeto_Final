@@ -25,7 +25,7 @@
 				<a href="#">Aplicativos</a>
 				<a href="#">Repositório de fotos</a>
 				<a href="#">Cabaçalho de provas</a>
-				<a href="questoes">Banco de questões</a>
+				<a href="home_questoes">Banco de questões</a>
 				<a href="#">Correções</a>
 				<a href="#">Calendário</a>
 				<a href="#">Fórum</a>

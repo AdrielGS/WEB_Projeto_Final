@@ -1,8 +1,7 @@
 <?php include PAGES.'header.php'; ?>
 
-<aside>
-  <a href="questoes">Home</a>
-  <a href="questoes/insert">Inserir</a>
+<aside style="position: absolute; left: 40%;">
+  <a href="questoes">Inserir</a>
   <a href="listar">Listar</a>
 </aside>
 

@@ -1,19 +1,10 @@
-<?php 
+<?php
 
-/**
-* 
-*/
-class questoes extends Controller
-{
-	//$question_id = 0;
-	
+class questoes extends Controller{
+
 	function __construct(){}
 
 	public function home(){
-		$this->view('home_questoes');
-	}
-
-	public function insert(){
 		$this->view('questoes');
 	}
 
@@ -29,14 +20,10 @@ class questoes extends Controller
 		$resp = array();
 		$correct = array();
 		
-		/*$opcao = $_POST["opt1"];
-		$opcao2 = $_POST["opt2"];
-		echo ">>>" . $numero_opcoes . $subject . "<br/>" . $opcao . "  " . $opcao2;*/
-		
 		try{
 
 			switch ($type) {
-			case '1':
+				case '1':
 				while ( !empty($_POST["opt" . $i]) ) {
 					$opcoes[ ($i - 1) ] = $_POST["opt" . $i];
 					$resp[($i - 1)] = $_POST["answer_op".$i];
@@ -44,7 +31,7 @@ class questoes extends Controller
 					$i++; 	
 				}	
 				break;
-			case '2':
+				case '2':
 				while ( !empty($_POST["opt" . $i])) {
 					$opcoes[($i - 1)] = $_POST["opt" . $i];
 					$correct[($i - 1)] = 0;
@@ -55,8 +42,8 @@ class questoes extends Controller
 				$indice--;
 				$correct[ $indice ] = 1;
 				break;
-			
-			case '3':
+
+				case '3':
 				while ( !empty($_POST["tf".$i])) {
 					$opcoes[($i - 1)] = $_POST["tf" . $i];
 					if(isset($_POST["answer_tf" . $i])) {
@@ -67,17 +54,12 @@ class questoes extends Controller
 					$i++;
 				}
 				break;
-			
-			
-			}
 
+			}
 		}
 		catch(Object $error){
-
 			echo $error->getMessage();
-
 		}
-		
 		
 		echo "<br/>Perguntas:<br/>";
 		var_dump($opcoes);
