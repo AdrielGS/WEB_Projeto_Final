@@ -1,12 +1,9 @@
-<html>
-<head>
-  <title> Questoes </title>
-  <meta charset = 'UTF-8' />
-  <script type="text/javascript" src="js/js.js">
-  </script>
-</head> 
+<?php include PAGES.'header.php'; ?>
 
-<body >
+<aside></aside>
+
+
+<article>
   <!-- Aparece depois de selecionar materia no SELECT -->
   <h1 id = "subject"> Selecione a matéria:  </h1>
   
@@ -60,6 +57,6 @@
 <input type = "reset" value = "Limpar" >
 <input type = "submit" value = "Enviar" >
 </form>
-</body>
+</article>
 
-</html>
+<?php include PAGES.'footer.php'; ?>
