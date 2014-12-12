@@ -101,13 +101,11 @@
 			$str_subject = "";
 			$str_type = "";
 			$str_difficulty = "";
-			$str_id = "";
 			$allSubject = true;
 			$allType = false;
 			$allDifficulty = false;
 			$firstDifficulty = true;
 			$firstType = true;
-			$firstID = true;
 
 			if($subject == "Todas"){
 				$str_subject = "";
@@ -167,9 +165,11 @@
 
 		if ($allDifficulty == true && $allSubject == true && $allType == true) {
 			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question");
+			$query_id = DB::conn()->prepare("SELECT id FROM __questions_question");
 		}
 		else {
 			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
+			$query_id = DB::conn()->prepare("SELECT id FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
 		}
 		
 		print_r($query_questoes);
@@ -185,27 +185,33 @@
 			$query_questoes->bindValue(':difficulty'.$i, $difficulty[$i], PDO::PARAM_INT);
 
 		$query_questoes->execute();
+		$query_id->execute();
 
-		$aux = 0;
-		$id = array();
-		while ($take = $query_questoes->setFetchMode(PDO::FETCH_ASSOC)) {
-			if ($take['correct'] == 1) {
-				if ($firstID == true) 
-					$str_id = "id = :id";
+		$id[] = $query_id->fetchAll();
+		$str_id = "";
+		$firstID = true;
+
+		for($i = 0; $i<count($id); $i++) {
+			if (count($id) > 0) {
+							
+				if ($firstID) {
+					$str_id = "question_id = :id".$i;
+					$firstID = false;
+				}
 				else
-					$str_id .="AND id = :id";
-				$id[$aux] = $take['id'];
-				$aux++;
+					$str_id = "OR question_id = :id".$i;
 			}
-		};
-
+		}
 		if ($type != 1) {
 			$query_options = DB::conn()->prepare("SELECT * FROM __questions_options WHERE $str_id ");
+			$query_correct = DB::conn()->prepare("SELECT value FROM __questions_options WHERE $str_id AND correct = :correct ");
+			$query_correct->bindValue(':correct', 1, PDO::PARAM_INT);
 			for ($i=0; $i < count($id); $i++) { 
 				$query_options->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
 			}
 			$query_options->execute();
 			$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
+			$query['correct'] = $query_correct->fetchAll(PDO::FETCH_OBJ);
 		}
 		else {
 			$query_open = DB::conn()->prepare("SELECT * FROM __questions_open WHERE $str_id ");
