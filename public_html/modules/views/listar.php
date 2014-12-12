@@ -5,12 +5,7 @@
  <a href="listar">Listar</a>
 </aside>
 
-<article>
-
-   <p:row>
-      <p:column> Teste 1 </p>
-      <p:column> Teste 2 </p>
-   </p>
+<article style="padding: 8px; position: relative;">
 	
    <header>
 		<table id = "table">
@@ -36,9 +31,9 @@
 				
             <tr> 
 					<td> Dificuldade: </td>
-					<td><input type = "checkbox" name = "difficulty1" id="difficulty1" value = "1" > Fácil</td>
-					<td><input type = "checkbox" name = "difficulty2" id="difficulty2" value = "2" > Médio</td>
-					<td><input type = "checkbox" name = "difficulty3" id="difficulty3" value = "3" > Difícil</td>
+					<td><input type = "checkbox" name = "difficulty1" id="difficulty1" value = "1" >Fácil </td>
+					<td><input type = "checkbox" name = "difficulty2" id="difficulty2" value = "2" >Médio </td>
+					<td><input type = "checkbox" name = "difficulty3" id="difficulty3" value = "3" >Difícil </td>
 				</tr>
 				
             <tr>

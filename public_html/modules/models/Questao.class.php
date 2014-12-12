@@ -98,6 +98,8 @@ class Questao extends DB {
 	}
 
 	public function getFilter($subject, $type, $difficulty){
+		echo "$subject";
+
 		$str_subject = "";
 		$str_type = "";
 		$str_difficulty = "";
@@ -163,13 +165,15 @@ class Questao extends DB {
 
 		if ($allDifficulty == true && $allSubject == true && $allType == true) {
 			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question");
-			/*Chico*/$query_id = DB::conn()->prepare("SELECT id FROM __questions_question");
+			// Chico -- $query_id = DB::conn()->prepare("SELECT id FROM __questions_question");
 		}
 		else {
+			echo "$str_subject";
 			$query_questoes = DB::conn()->prepare("SELECT * FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
-			/*Chico*/$query_id = DB::conn()->prepare("SELECT id FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
+			// Chico -- $query_id = DB::conn()->prepare("SELECT id FROM __questions_question WHERE $str_subject $str_type $str_difficulty");
 		}
 
+		echo "<br>Query: <br>";
 		print_r($query_questoes);
 
 		if ($allSubject == false) {
@@ -183,9 +187,9 @@ class Questao extends DB {
 			$query_questoes->bindValue(':difficulty'.$i, $difficulty[$i], PDO::PARAM_INT);
 
 		$query_questoes->execute();
-		//$query_id->execute();
+		// Chico -- $query_id->execute();
 
-		/*Chico -> */
+		/*Chico ->
 		$id[] = $query_id->fetchAll();
 		$str_id = "";
 		$firstID = true;
@@ -208,7 +212,7 @@ class Questao extends DB {
 			for ($i=0; $i < count($id); $i++) { 
 				$query_options->bindValue(':id'.$i, $id[$i], PDO::PARAM_INT);
 			}
-			/*ERRO $query_options->execute();*/
+			// -- ERRO $query_options->execute();
 			$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
 			$query['correct'] = $query_correct->fetchAll(PDO::FETCH_OBJ);
 		}
@@ -220,7 +224,7 @@ class Questao extends DB {
 			$query_open->execute();
 			$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);	
 		}
-		/* <- Chico*/
+		<- Chico*/
 
 
 		$query['questions'] = $query_questoes->fetchAll(PDO::FETCH_OBJ);
@@ -229,8 +233,14 @@ class Questao extends DB {
 		$query['open'] = $query_open->fetchAll(PDO::FETCH_OBJ);
 		*/
 
+		//---- var_dump($query['questions']);
+
 		echo "<br/><br/>_question: <br/>";
-		print_r($query['questions']);
+		for ($i=0; $i < count($query['questions']); $i++) { 
+			print_r( $query['questions'][$i] );
+			echo "<br>";
+		}
+
 		/*ERRO print_r($query['open']);*?/
 		/*ERRO print_r($query['options']);*/
 
