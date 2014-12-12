@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<base href="<?php echo URL; ?>">
-	<meta charset="UTF-8">
-	<title>INF</title>
-</head>
-<body>
+<?php include PAGES.'header.php' ?>
+
+<article>
 	<form id="login" method="POST" action="home/login">
 		<label>Login: <input type="text" name="login" placeholder="Digite seu login" /></label><br>
 		<label>Senha: <input type="password" name="pass" placeholder="Digite sua senha" /></label>
@@ -20,5 +15,6 @@
 	<?php
 		endif;
 	?>
-</body>
-</html>
+</article>
+
+<?php include PAGES.'footer.php' ?>

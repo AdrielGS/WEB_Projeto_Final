@@ -10,6 +10,10 @@ class questoes extends Controller
 	function __construct(){}
 
 	public function home(){
+		$this->view('home_questoes');
+	}
+
+	public function insert(){
 		$this->view('questoes');
 	}
 

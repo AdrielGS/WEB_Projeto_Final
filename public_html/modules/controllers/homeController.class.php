@@ -2,7 +2,7 @@
 	public function __construct(){ }
 
 	public function home($params = null){
-		/*session_start();
+		session_start();
 
 		$data = array();
 		if(!empty($params[0]))
@@ -12,9 +12,7 @@
 		if($loginClass->isLogged())
 			$this->view('panel', $data);
 		else
-			$this->view('index', $data);*/
-
-		$this->view('questoes');
+			$this->view('index', $data);
 	}
 
 	public function login(){

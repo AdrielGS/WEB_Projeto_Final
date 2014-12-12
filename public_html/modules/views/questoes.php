@@ -1,10 +1,14 @@
 <?php include PAGES.'header.php'; ?>
 
-<aside></aside>
+<aside>
+  <a href="questoes">Home</a>
+  <a href="questoes/insert">Inserir</a>
+  <a href="listar">Listar</a>
+</aside>
 
 
 <article>
-  <!-- Aparece depois de selecionar materia no SELECT -->
+
   <h1 id = "subject"> Selecione a matéria:  </h1>
   
   <form method='POST' action="questoes/add">
@@ -16,7 +20,6 @@
         <option> Materia 01 </option>
         <option> Materia 02 </option>
         <option value="add" id = "new_subject" > Adicionar </option>
-        <!-- se for adicionar nova materia, aparece um prompt ou input ao lado -->
       </select>
 
     </td>       

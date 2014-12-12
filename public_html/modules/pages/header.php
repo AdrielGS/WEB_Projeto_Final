@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/js.js"></script>
 	<?php
-		$username = isset($user->name) ? $user->name : "Convidado";
+		$username = isset($user->name) ? $user->name : "Lucas C. Felicíssimo";
 	?>
 </head>
 <body>
@@ -25,7 +25,7 @@
 				<a href="#">Aplicativos</a>
 				<a href="#">Repositório de fotos</a>
 				<a href="#">Cabaçalho de provas</a>
-				<a href="#">Banco de questões</a>
+				<a href="questoes">Banco de questões</a>
 				<a href="#">Correções</a>
 				<a href="#">Calendário</a>
 				<a href="#">Fórum</a>
