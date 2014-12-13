@@ -1,11 +1,7 @@
-<?php 
+<?php
 
-/**
-* 
-*/
-class questoes extends Controller
-{
-	
+class questoes extends Controller{
+
 	function __construct(){}
 
 	public function home(){
@@ -19,50 +15,59 @@ class questoes extends Controller
 		$tags = $_POST["tags"];
 		$difficulty = $_POST['difficulty'];
 		$question = $_POST["question"];
-		$numero_opcoes = "<script src='js/js.js'></script><script>document.write(i)</script>";
 		$i = 1;
+		$opcoes = array();
 		$resp = array();
-		$j = 0;
+		$correct = array();
 		
-		/*$opcao = $_POST["opt1"];
-		$opcao2 = $_POST["opt2"];
-		echo ">>>" . $numero_opcoes . $subject . "<br/>" . $opcao . "  " . $opcao2;*/
-		switch ($type) {
-			case '1':
+		try{
+
+			switch ($type) {
+				case '1':
 				while ( !empty($_POST["opt" . $i]) ) {
 					$opcoes[ ($i - 1) ] = $_POST["opt" . $i];
 					$resp[($i - 1)] = $_POST["answer_op".$i];
-					$i++;	
+					$correct[($i - 1)] = 1;
+					$i++; 	
 				}	
 				break;
-			case '2':
+				case '2':
 				while ( !empty($_POST["opt" . $i])) {
 					$opcoes[($i - 1)] = $_POST["opt" . $i];
-					$resp[($i - 1)] = 0;
+					$correct[($i - 1)] = 0;
 					$i++;
 				}
 				$indice = $_POST["answer_mc"];
+				echo $indice;
 				$indice--;
-				$resp[ $indice ] = 1;
+				$correct[ $indice ] = 1;
 				break;
-			
-			case '3':
+
+				case '3':
 				while ( !empty($_POST["tf".$i])) {
 					$opcoes[($i - 1)] = $_POST["tf" . $i];
 					if(isset($_POST["answer_tf" . $i])) {
-						$resp[($i - 1)] = 1;
+						$correct[($i - 1)] = 1;
 					}
 					else
-						$resp[($i - 1)] = 0;
+						$correct[($i - 1)] = 0;
 					$i++;
 				}
 				break;
+
+			}
+		}
+		catch(Object $error){
+			echo $error->getMessage();
 		}
 		
 		echo "<br/>Perguntas:<br/>";
 		var_dump($opcoes);
 		echo "<br/>Respostas:<br/>";
 		var_dump($resp);
+
+		$new_questao = new Questao();
+		$new_questao->add($question, $type, $difficulty, $subject, $tags, $opcoes, $resp, $correct);
 
 /*
 		if ($type == 1) {
@@ -81,6 +86,9 @@ class questoes extends Controller
 		$questao->add($enunciado, $tipo, $materia, $dificuldade, $resposta, $opcoes);*/
 
 	}
+	
+
+
 }
 
 ?>
