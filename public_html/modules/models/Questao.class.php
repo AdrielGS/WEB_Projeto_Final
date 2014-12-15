@@ -186,15 +186,16 @@
 
 		$query_questoes->execute();
 
+		
 		$aux = 0;
 		$id = array();
 		$take = $query_questoes->setFetchMode(PDO::FETCH_ASSOC);
 		while ($row = $query_questoes->fetch())) {
 			$id[$aux] = $row['id'];
 			if ($firstID == true) 
-				$str_id = "question_id = :id";
+				$str_id = "question_id = :id". $aux;
 			else
-				$str_id = "AND question_id = :id";
+				$str_id = "AND question_id = :id". $aux;
 			$aux++;
 		}
 
@@ -208,10 +209,10 @@
 			$query_options->execute();
 			$take = $query_options->setFetchMode(PDO::FETCH_ASSOC);
 			$correct = array();
-			$aux;
+			$aux = 0;
 			while ($row = $query_options->fetch()) {
 				if($row['correct'] == 1)
-					$correct = $row['value'];
+					$correct[aux] = $row['value'];
 			}
 			$query['options'] = $query_options->fetchAll(PDO::FETCH_OBJ);
 
