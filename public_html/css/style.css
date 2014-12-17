@@ -1,14 +1,14 @@
 a:link, a:visited{text-decoration:none}
 a:hover, a:active{text-decoration:none}
 
-body, html{
-	width:100%;
-	height:calc(100% - 53px);
-	font:normal 13px 'Segoe UI', Verdana, Arial, sans-serif;
-	background: #E8EAF6;
+html{
+	height:100%;
 }
 
 body{
+	font:normal 13px 'Segoe UI', Verdana, Arial, sans-serif;
+	background: #E8EAF6;
+	height:calc(100% - 53px);
 	margin:53px 0px 0px 0px;
 }
 
@@ -18,31 +18,25 @@ nav{
 	left:0px;
 	width:100%;
 	background:#3F51B5;
-	overflow:hidden;
+	/*overflow:hidden;*/
 	font-size:1.4em;
 	color:#fff;
 	box-shadow:0px 0px 6px 0px rgba(0,0,0,.6);
 	z-index:100
 }
 
-#user{
-	display:table; 
-	float:right;
-	padding:10px;
-	font-weight:bold;
-}
-
-#user > span{
-	display:table-cell;
-	vertical-align:middle;
-}
-
-#user:hover{
-	background:#5C6BC0;
-	cursor:pointer;
+#logo{
+	width:212px;
+	height:53px;
+	position:fixed;
+	top:0px;
+	left:50%;
+	margin-left:-106px;
+	background:url(../images/logo.png);
 }
 
 #userPhoto{
+	padding:10px 7px 10px 10px;
 	width:33px;
 	height:33px;
 	float:left;
@@ -63,8 +57,8 @@ nav{
 
 #menuIcon{
 	float:left;
-	padding:1px;
-	width:50px;
+	padding:5px;
+	width:43px;
 }
 
 #menuIcon > span{
@@ -72,7 +66,7 @@ nav{
 	background:#fff;
 	border-radius:10px;
 	padding:3px;
-	margin:8px;
+	margin:6px;
 }
 
 #menuIcon + h2{
@@ -115,6 +109,7 @@ aside{
 	width:20%;
 	border-radius:4px 0px 0px 4px;
 	box-shadow:0px 0px 6px 0px rgba(0,0,0,.6);
+	background:#3F51B5;
 }
 
 
@@ -126,24 +121,102 @@ aside > a:last-child{
 	border-radius:0px 0px 0px 4px;
 }
 
-aside > a:active, a:active:hover{
-	background: #fff;
-	color: #3F51B5;
-	box-shadow:6px 0px 0px 0px rgba(255,255,255,1);
-}
-
 aside > a{
 	display:block;
-	background:blue;
 	padding:10px;
+	color:#fff;
+	cursor:pointer;
+}
+
+aside > a:hover, aside > span > span:hover, aside > span > a:hover{
+	background:#5C6BC0;
+}
+
+aside > a:active, aside > .subMenuActive > a:active, aside > a.active{
+	background: #fff;
+	color: #3F51B5;
+	box-shadow:5px 0px 0px 0px rgba(255,255,255,1);
+}
+
+aside > span > span {	
+	padding:10px;	
+	display:block;
+	color:#fff;
+	cursor:pointer;	
+}
+
+aside > .subMenu > a{
+	display:none;
+	width:100%;
+}
+
+aside > .subMenuActive > a{
+	padding:10px 30px;
+	display:block;
 	background:#3F51B5;
 	color:#fff;
 }
 
-aside > a:hover{
-	background:#5C6BC0;
-	color:#fff;
+aside > .subMenuActive > span{
+	border-bottom:1px solid #fff;
+}
+
+#user {
+	display:block;
 	overflow:hidden;
+	float:right;
+	width:13%;
+	height:53px;
+}
+
+#user:hover{
+	cursor:pointer;
+	background:#5C6BC0;
+}
+
+#user > span {
+	max-height:2px;
+	line-height:53px;
+	font-weight:bold;
+}
+
+#user > div{
+	position:fixed;
+	top:53px;
+	right:0px;
+	width:inherit;
+	overflow: hidden;
+	background:#3F51B5;
+}
+
+.userMenu > div {
+	height:0px;	
+}
+
+.userMenuActive > div{
+	height:auto;
+}
+
+#user > div > a{
+	display:block;
+	padding:10px;
+	color:#fff;
+}
+
+#user > div > a:hover{
+	background:#5C6BC0;
+}
+
+#user > div > a:active{
+	background:#fff;
+	color:#3F51B5;
+	box-shadow:inset 0 0 0 1px #3F51B5;
+}
+
+aside > hr{
+	width:90%;
+	margin:3px auto;
+	float:center;
 }
 
 article{
@@ -151,7 +224,7 @@ article{
 	margin:10px 10px 10px 10px;
 	float:right;
 	overflow:hidden;
-	height:90%;
+	min-height:90%;
 	box-shadow:0px 0px 6px 0px rgba(0,0,0,.6);
 	background: white;
 	border-radius:3px;

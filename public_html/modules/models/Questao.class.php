@@ -1,3 +1,5 @@
+<meta charset=utf-8>
+
 <?php class Questao extends DB
 {
 	
@@ -93,9 +95,45 @@
 
 
 		return $query;
+	}
 
+	public function getWithFilter($subject, $type, $difficulty){
+		$strSubject = $subject == 'Todas' ? '1=1' : '`subject` = \''.$subject.'\'';
+		$strType = empty($type) ? '1, 2, 3' : $type[0];
+		$strDifficulty = empty($difficulty) ? '1, 2, 3' : $difficulty[0];
+
+		for ($i = 1; $i < count($type); $i++)
+			$strType .= ', '.$type[$i];
+
+		for ($i = 1; $i < count($difficulty); $i++)
+			$strDifficulty .= ', '.$difficulty[$i];
+
+		$query = DB::conn()->prepare('SELECT * FROM __questions_question WHERE 
+			'.$strSubject.' AND (`type` IN ('.$strType.')) AND (`difficulty` IN ('.$strDifficulty.'))');
+		$query->execute();
+		
+		return $query->fetchAll(PDO::FETCH_OBJ);
 
 	}
+
+	public function getAnswer($questions){
+		$strId = $questions[0]->id;
+
+		for ($i = 1; $i < count($questions); $i++) { 
+			$strId .= ', ' . $questions[$i]->id;
+		}
+
+		echo $strId;
+
+		$query = DB::conn()->prepare('SELECT * FROM __questions_open, __questions_options WHERE `__questions_open.question_id` IN(' . $strId . ') OR `__questions_options.question_id` IN(' . $strId . ')');
+		
+		$query->execute();
+		
+		$result = $query->fetchAll(PDO::FETCH_OBJ);
+		return $result;
+
+	}
+
 
 	public function getFilter($subject, $type, $difficulty){
 		$str_subject = "";
@@ -114,7 +152,7 @@
 		else{
 			$str_subject = "subject = :subject";
 			$allSubject = false;
-			$firstDifficulty == false;
+			$firstDifficulty = false;
 		}
 
 		if($type == null){
@@ -129,7 +167,7 @@
 			$allDifficulty = true;
 
 
-		for($i=0; $i < count($type); $i++){
+		/*for($i=0; $i < count($type); $i++){
 			if($subject == "Todas" && $allType == false && $firstType == true){
 				$str_type .= "type = :type". $i;
 				$firstType = false;
@@ -161,10 +199,10 @@
 					$str_difficulty .= " OR difficulty = :difficulty". $i;
 				}
 			}
-		}
+		}*/
 
-		echo "<br><br>subject:<br>";
-		echo count($subject) . "<br>";
+		echo "Número de subject selecionados:<br>";
+		echo count($subject);
 
 		$j = 0; $k = 0;
 		$placeGeneral = array();
@@ -184,7 +222,7 @@
 			
 		}
 
-		echo "<br><br>placeGeneral:<br>";
+		echo '<br><br>$placeGeneral:<br>';
 		print_r($placeGeneral);
 		echo "<br>";
 
@@ -192,15 +230,12 @@
 		$placeDifficulty = implode(',', array_fill(0, count($difficulty), '?'));
 		$placeSubject = implode(',', array_fill(0, count($subject), '?'));
 
-		echo "<br><br>placeType:<br>";
+		echo '<br><br>$placeType:<br>';
 		print_r($placeType);
-		echo "<br>";
-		echo "<br><br>placeDifficulty:<br>";
+		echo '<br><br>$placeDifficulty:<br>';
 		print_r($placeDifficulty);
-		echo "<br>";
-		echo "<br><br>placeSubject:<br>";
+		echo '<br><br>$placeSubject:<br>';
 		print_r($placeSubject);
-		echo "<br><br>";
 
 		if ($allType == true && $allSubject == true && $allDifficulty == true) {
 			$aux = $this->getAll();
@@ -237,12 +272,7 @@
 
 		echo "<br><br>Query:<br>";
 		print_r($query_questoes);
-		$query_questoes->bindValue(':subject', $subject, PDO::PARAM_STR);
-
-		echo "<br><br>Query:<br>";
-		print_r($query_questoes);
 		$query_questoes->execute($placeGeneral);
-
 
 			//echo "<br/>" . $str_type;
 			//echo "<br/>" . $str_difficulty;
@@ -285,10 +315,12 @@
 		foreach ($variable as $query) {
 			echo $variable;
 		}*/
-		echo "<br/>";
-		echo "<br/>";
-		print_r($query['questions']);
-
+		echo "<br/><br>Resultado:<br>";
+		for ( $i=0; $i < count($query['questions']); $i++ ) { 
+			echo $i + 1 . " - ";
+			print_r($query['questions'][$i]);
+			echo "<br>";
+		}
 
 		return $query;
 

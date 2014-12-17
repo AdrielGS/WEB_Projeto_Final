@@ -1,8 +1,5 @@
 <?php 
-	class listar extends Controller{
-
-		function __construct(){}
-
+	class listarController extends Controller{
 		public function home(){
 			$this->view("listar");
 		}
@@ -13,7 +10,9 @@
 			$difficulty = array();
 			$j = 0;
 			$k = 0;
-			
+			//--- Função para pegar as respostas pelo id --- $id = array();
+			//--- Função para pegar as respostas pelo id (fazer for) --- $show_question->getAnswers($id);
+
 			for($i = 1; $i < 4; $i++ ){
 				if(isset($_POST["type".$i])){
 					$type[$j] = $_POST["type".$i];
@@ -25,14 +24,16 @@
 				}
 				
 			}
+			
 			/*
 			var_dump($subject);
 			var_dump($type);
 			var_dump($difficulty);
-*/
+			*/
 
 			$show_question = new Questao();
-			$result = $show_question->getFilter($subject, $type, $difficulty);
+			$result = $show_question->getWithFilter($subject, $type, $difficulty);
+
 			//var_dump($result);
 
 		}

@@ -1,11 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- <base href="<?php echo URL; ?>"> -->
+	<base href="<?php echo URL; ?>">
 	<meta charset="UTF-8">
 	<title>INF</title>
 	<link rel="stylesheet" href="css/style.css">
-	<script type="text/javascript" src="js/js.js"></script>
+	<!-- <script src="js/js.js"></script> -->
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function(){
+			
+			links = menuLinks.getElementsByTagName('a');
+			divMenuTitle = document.getElementById('menuTitle');
+			menuLinks = document.getElementById('menuLinks');
+
+			// ---------- CONFIGURAR TITULO DO MENU SUPERIOR
+			function attTitle(){
+				url = window.location.pathname.split('/');
+				controller = !url[3] || url[3] == '' ? 'home' : url[3];
+				
+				for(i=0;i<links.length;i++){
+					if(links[i].getAttribute('href') == controller){
+						divMenuTitle.innerHTML = links[i].innerHTML;	
+					}
+				}
+			}
+			attTitle();
+
+			// ---------- CONFIGURAR CLASS MENU LATERAL
+			subMenu = document.getElementsByTagName('aside')[0];
+			subMenuLinks = subMenu.getElementsByTagName('a');
+			function attSidebar(){
+				url = window.location.pathname.split('/');
+				controller = !url[3] || url[3] == '' ? 'home' : url[3];
+				action = !url[4] || url[4] == '' ? 'home' : url[4];
+
+				for(i=0; i<subMenuLinks.length; i++){
+					if(subMenuLinks[i].getAttribute('href') == controller+'/'+action){
+						subMenuLinks[i].className = 'active';
+						if(subMenuLinks[i].parentNode.className == 'subMenu'){
+							subMenuLinks[i].parentNode.className = 'subMenuActive';
+						}
+					}
+				}
+			}
+			attSidebar();
+
+			function activate(obj){
+				if (obj.className.search('Active') > 0)
+					obj.className = obj.className.replace('Active', '');
+				else
+					obj.className += 'Active';
+			}
+
+			subMenus = document.getElementsByClassName('subMenu');
+			for (var i = 0; i < subMenus.length; i++){
+				subMenus[i].addEventListener('click', function(){
+					activate(this);
+				});
+			}
+
+			document.querySelector('.userMenu').addEventListener('click', function(){
+				activate(this);
+			});
+
+		});
+	</script>
 	<?php
 		$username = isset($user->name) ? $user->name : "Convidado";
 	?>
@@ -18,26 +77,33 @@
 				<span></span>
 				<span></span>
 			</div>
-			<h2 id="title">Início</h2>
+			<h2 id="menuTitle"></h2>
 			<div id="menuLinks">
 				<a href="home">Início</a>
-				<a href="#">Mural</a>
-				<a href="#">Aplicativos</a>
-				<a href="#">Repositório de fotos</a>
-				<a href="#">Cabaçalho de provas</a>
-				<a href="#">Banco de questões</a>
-				<a href="#">Correções</a>
-				<a href="#">Calendário</a>
-				<a href="#">Fórum</a>
-				<a href="#">Chat</a>
-				<a href="home/logout">Logout</a>
+				<a href="user">Usuário</a>
+				<a href="mural">Mural</a>
+				<a href="aplicativos">Aplicativos</a>
+				<a href="fotos">Repositório de fotos</a>
+				<a href="provas">Cabaçalho de provas</a>
+				<a href="questoes">Banco de questões</a>
+				<a href="correcoes">Correções</a>
+				<a href="calendario">Calendário</a>
+				<a href="forum">Fórum</a>
+				<a href="chat">Chat</a>
 			</div>
 		</div>
-
-		<div id="user">
+		<div id="logo"></div>
+		<!-- <img src="images/logo.svg" id="logo"> -->
+		<div id="user" class="userMenu">
 			<img id="userPhoto"
 				src="http://dummyimage.com/50x50/FF9800/FFF.png
 				&text=<?php echo strtoupper($username[0])?>">
-			<span><?php echo $username; ?></span>
+			<span><?php echo $username; ?></span>		
+			<?php if ($username != 'Convidado')
+				echo '<div>
+						<a href="user">Perfil</a>
+						<a href="user/notifications">Notificações</a>
+						<a href="home/logout">Sair</a>
+					</div>'; ?>
 		</div>
 	</nav>
