@@ -1,12 +1,7 @@
 <?php class Login extends DB{
-	public $id;
-	public $name;
-	public $email;
-	public $regNumber;
-	public $isTeacher;
 
 	public function __construct(){ }
-
+	
 	public function register($name, $pass, $email, $regNumber, $class, $isTeacher){
 		$pass = hash('sha512', DB::$salt.$pass);
 		$query = DB::conn()->prepare('INSERT INTO `users` (`regNumber`, `name`,
@@ -41,40 +36,36 @@
 		$query->execute();
 
 		if($query->rowCount() == 1){
+			session_start();
 			$result = $query->fetch(PDO::FETCH_OBJ);
-			$_SESSION['login'] = $this->generateToken($result->id);
+			$_SESSION['session'] = $this->generateToken($result->id);
 			$_SESSION['time'] = time();
-			setcookie('login', $login, time() + 2592000);
+      		setcookie('login', $login, time() + 2592000, URL);
 			return true;
 		}else{
-			setcookie('login', $login);
+			setcookie('login', $login, 0, URL);
 			return false;
 		}
 		
 	}
 
 	/*
-		Verifica se o usuario está logado e seta as variaveis da classe
-		com as informações do usuário
-		Args:
-			$initialPage: opcional, sete como true caso esteja verificado
-			se o usuário está logado na página de login, para o redirecionamento
-			funcionar corretamente, default = false
+		Verifica se o usuario está logado
 		Return:
-			Retorna (bool)true quando logado
+			Retorna (int)o id do usuário quando logado
 			Retorna (bool)false quando não logado
 			Redireciona para a página inicial com um aviso caso exista a session
 				mas o login não tenha sido encontrado no banco de dados
 	*/
 	public function isLogged(){
-		if(isset($_SESSION['login'])){
+		if(isset($_SESSION['session'])){
 			if( empty($_SERVER['HTTP_X_FORWARDED_FOR']) ){
 				$ip_address = $_SERVER['REMOTE_ADDR'];
 			}else{
 				$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
 			}
 
-			$hash = $_SESSION['login'];
+			$hash = $_SESSION['session'];
 
 			$query = DB::conn()->prepare('SELECT `id_user` FROM `tokens` WHERE
 				`hash` = :hash AND `ip` = :ip');
@@ -95,8 +86,8 @@
 	}
 
 	private function deleteToken(){
-		if(isset($_SESSION['login'])){
-			$hash = htmlentities($_SESSION['login'], ENT_QUOTES, 'UTF-8');
+		if(isset($_SESSION['session'])){
+			$hash = htmlentities($_SESSION['session'], ENT_QUOTES, 'UTF-8');
 			$query = DB::conn()->prepare('DELETE FROM `tokens` WHERE `hash` = :hash');
 			$query->bindValue(':hash', $hash, PDO::PARAM_STR);
 			$query->execute();

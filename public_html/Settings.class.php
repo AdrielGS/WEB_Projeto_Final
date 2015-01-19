@@ -23,7 +23,7 @@
 	}
 
 	public function setController(){
-		$this->_controller = $this->_explode[0];
+		$this->_controller = $this->_explode[0].'Controller';
 	}
 
 	public function setAction(){
@@ -36,24 +36,14 @@
 	}
 
 	public function run(){
-		$path = CONTROLLERS.$this->_controller.'Controller.class.php';
+		$path = CONTROLLERS.$this->_controller.'.class.php';
 
 		if(!file_exists($path)){
 			require_once CONTROLLERS.'errorController.class.php';
-			$error = new error();
-			$error->error404();
+			$error = new errorController('error404');
 		}else{
 			require_once $path;
-			$app = new $this->_controller();
-
-			$ac = $this->_action;
-			if(method_exists($app, $ac))
-				$app->$ac($this->_params);
-			else{
-				require_once CONTROLLERS.'errorController.class.php';
-				$error = new error();
-				$error->error404();
-			}
+			$app = new $this->_controller($this->_action, $this->_params);
 		}
 	}
 }

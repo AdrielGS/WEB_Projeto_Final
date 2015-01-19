@@ -1,109 +1,57 @@
+document.addEventListener('DOMContentLoaded', function(){
+	url = window.location.pathname.split('/');
+	controller = !url[3] || url[3] == '' ? 'home' : url[3];
 
+	list = document.getElementById('menuLinks');
+	links = list.getElementsByTagName('a');
 
-var i = 0;
-var y = 0;
-var type_id = 0;
-var a = "";
+	menu = document.getElementById('menu');
+	menuTitle = document.getElementById('title');
 
-primeiraOpcao = true;
+	for(i=0;i<links.length;i++){
+		if(links[i].getAttribute('href') == controller){
+			menuTitle.innerHTML = links[i].innerHTML;	
+		}
+	}
 
-function setType(x){
-  if (type_id == x || type_id == 0)
-    primeiraOpcao = false;
-  else
-    primeiraOpcao = true;
+	/*for(i=0;i<links.length;i++){
+		links[i].addEventListener('click', function(){
+			if( this.href.indexOf('127.0.0.1') != -1 ){
+				event.preventDefault();
+			}
+		});
+	}*/
 
-  type_id = x;
-}
+	document.addEventListener('click', function(){
+		if( !hasParent(event.target, userLogo) && userLogo.className == 'active'){
+			statsUserMenu();
+		}
+	});
 
-function createOptions(){
-  //type_id = getType();
+	userMenu = document.getElementById('userMenu');
+	userLogo = document.getElementById('userLogo');
+	userLogo.addEventListener('click', statsUserMenu);
 
-  switch(type_id){
-    case "1":
-      if (primeiraOpcao == true){
-        for (var j = 1; j <= i; j++) 
-          document.getElementById("option" + j).outerHTML = "";
-        primeiraOpcao = false;
-        i = 0;
-      }
-      i++;
-     /* if (i == 1) {
-        a = "<tr><td>Introdução: </td><td colspan='3'><input type='text' id='introduction' name='introduction'></td></tr>";
-      }
-      else{*/
-      a = "<tr id='option"+i+"' >" + 
-      "<td></td>" + 
-      "<td colspan='2' >" + 
-        "P: <input type='text' id ='opt"+i+"' name='opt"+i+"' value='"+i+"'>" + 
-      "</td>" + 
-      "<td colspan='2' id='option'>" + 
-        "R: <input type = 'text' name='answer_op"+i+"' id='answer_op"+i+"'>" + 
-      "</td></tr> ";
-     // }
-      break;
+	function statsUserMenu(){
+		if(userLogo.className == 'active'){
+			userLogo.removeAttribute('class');
+		}else{
+			userLogo.className = 'active';
+		}
+	}
 
-     case "2":
-      if (primeiraOpcao == true){
-        for (var j = 1; j <= i; j++) 
-          document.getElementById("option" + j).outerHTML = "";
-        primeiraOpcao = false;
-        i = 0;
-      }
-      i++;
-      a = "<tr id='option"+i+"'>" + 
-      "<td></td>" + 
-      "<td colspan='4'> " + 
-        "<input type = 'text' id ='opt"+i+"' name='opt"+i+"' value='"+i+"'>" + 
-        "<input type = 'radio' id='answer_mc' name='answer_mc' value='"+i+"'>" + 
-      "</td></tr>";
-      break;
+	function hasParent(initial, parent){
+		while(initial != document.body){
+			if(initial == parent){
+				return true;
+			}else{
+				initial = initial.parentNode;
+			}
+		}
+		return false;
+	}
 
-     case "3":
-      if (primeiraOpcao == true){
-        for (var j = 1; j <= i; j++) 
-          document.getElementById("option" + j).outerHTML = "";
-        primeiraOpcao = false;
-        i = 0;
-      }
-      i++;
-      a = "<tr id='option"+i+"'>" +
-      "<td></td>" +
-      "<td colspan='4'>" + 
-        "<input type = 'text' id ='tf"+i+"' name='tf"+i+"' value='"+i+"'>" + 
-        "<input type = 'checkbox' id ='answer_tf"+i+"' name='answer_tf"+i+"' value='"+i+"'>" + 
-      "</td></tr>";
-      break;
-   }
+	function goTo(link){
 
-   document.getElementById("table").insertAdjacentHTML('beforeEnd', a);
- }
-
-function addTag(value){
-  
-  if (value == 'add') {
-    document.getElementById('subject').innerHTML = 'Adicionar materia';
-    var txt = "<td colspan='3'><input type = 'text' id = 'newTag' onchange='changeTitle(this.value), setValue()'> </td>";
-    document.getElementById("select_subject").insertAdjacentHTML('afterEnd', txt);
-   
-  }
-  // MARRETA ! 
-  else{
-    if(document.getElementById("newTag")){
-      document.getElementById("newTag").outerHTML = "";
-    }
-    document.getElementById("new_subject").value = "add";
-  }
-
-}
-
-function changeTitle(title){
-  
-  document.getElementById('subject').innerHTML = title;
-
-}
-
-function setValue(){
-   document.getElementById("new_subject").value = document.getElementById("newTag").value;
-
-}
+	}
+});

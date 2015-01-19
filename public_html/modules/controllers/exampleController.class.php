@@ -1,6 +1,4 @@
-<?php class example extends Controller{
-	public function __construct(){ }
-
+<?php class exampleController extends Controller{
 	public function home($params = null){
 		$this->view('index');
 	}
@@ -11,7 +9,7 @@
 		$data['title'] = 'Example';
 		$data['params'] = $params;
 
-		$classExample = new Exemplo();
+		$classExample = new Example();
 		$data['values'] = $classExample->exampleValues($min);
 
 		$data['lastId'] = $classExample->addValue(rand(0,100));

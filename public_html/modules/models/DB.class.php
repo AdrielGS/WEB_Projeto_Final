@@ -1,7 +1,7 @@
 <?php class DB{
 	static $salt = 'd0238551f12dc39ece174b61f05c6a26';
 	static $host = '127.0.0.1';
-	static $dbname = 'questions';
+	static $dbname = 'questions1';
 	static $login = 'root';
 	static $pass = '';
 	protected static $conn;
